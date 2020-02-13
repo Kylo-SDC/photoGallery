@@ -13,8 +13,6 @@ const generate = () => {
       db.query(`INSERT INTO photos (image, restaurant_id, date) VALUES ( '${url}', ${i}, '${date}')`, (err, result) => {
         if (err) {
           console.log('there was an error', err);
-        } else {
-          console.log('record written', result);
         }
       });
     }
