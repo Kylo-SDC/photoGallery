@@ -31,6 +31,17 @@ app.get('/api/one_photo/:id', (req, res) => {
   })
 })
 
+app.post('/api/add_photo', (req, res) => {
+  const newRecord = req.body;
+  db.createNewPhoto(newRecord, (err, newPhoto) => {
+    if (err) {
+      console.error('unable to create new record: ', err);
+    } else {
+      res.send(newPhoto);
+    }
+  })
+})
+
 app.put('/api/update_photo', (req, res) => {
   const id = req.body.id;
   const newImageURL = req.body.image;
@@ -42,4 +53,5 @@ app.put('/api/update_photo', (req, res) => {
     }
   })
 })
+
 module.exports = app;
