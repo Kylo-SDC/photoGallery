@@ -12,4 +12,16 @@ module.exports = {
       }
     });
   },
+
+  getOnePhoto: (id, callback) => {
+    const queryStr = `SELECT * FROM photos WHERE id = ${id}`;
+
+    db.query(queryStr, (err, results) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, results);
+      }
+    })
+  }
 };

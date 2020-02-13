@@ -19,4 +19,14 @@ app.get('/api/photos/:restaurant_id', (req, res) => {
   });
 });
 
+app.get('/api/one_photo/:id', (req, res) => {
+  const id = req.params.id;
+  db.getOnePhoto(id, (err, photo) => {
+    if (err) {
+      console.error('error in getting one photo: ', err);
+    } else {
+      res.send(photo);
+    }
+  })
+})
 module.exports = app;
