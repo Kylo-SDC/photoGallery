@@ -16,11 +16,23 @@ module.exports = {
   getOnePhoto: (id, callback) => {
     const queryStr = `SELECT * FROM photos WHERE id = ${id}`;
 
-    db.query(queryStr, (err, results) => {
+    db.query(queryStr, (err, result) => {
       if (err) {
         callback(err);
       } else {
-        callback(null, results);
+        callback(null, result);
+      }
+    })
+  },
+
+  updateOnePhoto: (id, imageURL, callback) => {
+    const queryStr = `UPDATE photos SET image = '${imageURL}' WHERE id = ${id}`;
+
+    db.query(queryStr, (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result)
       }
     })
   }
