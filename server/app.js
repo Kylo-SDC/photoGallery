@@ -37,7 +37,7 @@ app.post('/api/add_photo', (req, res) => {
     if (err) {
       console.error('unable to create new record: ', err);
     } else {
-      res.status(201);
+      res.status(201).json(newPhoto);
     }
   })
 })
@@ -49,7 +49,7 @@ app.put('/api/update_photo', (req, res) => {
     if (err) {
       console.error('unable to update photo: ', err);
     } else {
-      res.status(200);
+      res.status(200).json(update);
     }
   })
 })
@@ -60,7 +60,7 @@ app.delete('/api/delete_record', (req, res) => {
     if (err) {
       console.error('unable to delete photo: ', err);
     } else {
-      res.status(200);
+      res.status(200).json(result);
     }
   })
 })
