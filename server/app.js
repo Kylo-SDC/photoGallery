@@ -54,4 +54,15 @@ app.put('/api/update_photo', (req, res) => {
   })
 })
 
+app.delete('/api/delete_record', (req, res) => {
+  const id = req.body.id;
+  db.deleteOnePhoto(id, (err, result) => {
+    if (err) {
+      console.error('unable to delete photo: ', err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
 module.exports = app;

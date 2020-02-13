@@ -47,5 +47,17 @@ module.exports = {
         callback(null, result)
       }
     })
-  }
+  },
+
+  deleteOnePhoto: (id, callback)  => {
+    const queryStr = `DELETE FROM photos WHERE id = ${id}`
+
+    db.query(queryStr, (err, result) => {
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, result)
+      }
+    })
+  },
 };
