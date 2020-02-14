@@ -26,4 +26,5 @@ Route: /api/delete_record
 Requires the id of the record being deleted.
 Sends a status 200 on success.
 
-
+// RUN DATA GENERATION
+script: npm run build:data
