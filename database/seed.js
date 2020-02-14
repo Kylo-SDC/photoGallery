@@ -1,4 +1,5 @@
 const db = require('./index.js');
+const fs = require('fs');
 
 // const generate = () => {
 //   const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -21,21 +22,41 @@ const db = require('./index.js');
 
 // generate();
 
-const dataGenerator = () => {
+const dataGenerator = (numOfPhotos) => {
   const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const year = ['2017', '2018', '2019', '2020'];
   const generateImageUrl = () => {
     return `baconmockup.com/${Math.round(Math.random() * 1000)}/${Math.round(Math.random() * 1000)}`
   };
-  const date = `${month[Math.floor(Math.random() * 12)]} ${Math.ceil(Math.random() * 30)}, ${year[Math.floor(Math.random() * 4)]}`;
+  const fileWriter = fs.createWriteStream('photos.csv');
+  let writing = true;
 
-  let photo = {};
-  photo.image = generateImageUrl();
-  photo.date = date;
-  photo.restaurant_id = Math.round(Math.random() * 10000000);
-  return photo;
+  fileWriter.write('image, date, restaurant_Id \n')
+  const csvGenerator = () => {
+    do {
+      let photo = {};
+      const date = `${month[Math.floor(Math.random() * 12)]} ${Math.ceil(Math.random() * 30)} ${year[Math.floor(Math.random() * 4)]}`;
+      photo.image = generateImageUrl();
+      photo.date = date;
+      photo.restaurant_id = Math.round(Math.random() * 10000000);
+      numOfPhotos -= 1;
+      if (numOfPhotos < 0) {
+        fileWriter.end();
+      } else {
+        writing = fileWriter.write(`${photo.image}, ${photo.date}, ${photo.restaurant_id}\n`)
+      }
+    } while (numOfPhotos > 0 && writing);
+
+    if (numOfPhotos > 0) {
+      fileWriter.once('drain', csvGenerator);
+    }
+    fileWriter.on('close', () => {
+      process.exit();
+    })
+  }
+  csvGenerator()
 }
 
-dataGenerator();
+dataGenerator(10000000);
 
 module.exports = dataGenerator;
