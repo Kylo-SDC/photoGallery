@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.config.js --watch",
     "connect": "mysql -u root",
     "build:data": "node ./database/seed.js",
-    "db": "psql -d postgres -U zach",
+    "db": "psql -d photos -U zach",
     "db:build": "mysql -u root < ./database/schema.sql"
   },
   "repository": {

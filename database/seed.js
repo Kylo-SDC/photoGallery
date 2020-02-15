@@ -31,7 +31,7 @@ const dataGenerator = (numOfPhotos) => {
   const fileWriter = fs.createWriteStream('photos.csv');
   let writing = true;
 
-  fileWriter.write('image, date, restaurant_Id \n')
+  fileWriter.write('image, date, restaurantId \n')
   const csvGenerator = () => {
     do {
       let photo = {};
@@ -57,6 +57,6 @@ const dataGenerator = (numOfPhotos) => {
   csvGenerator()
 }
 
-dataGenerator(10000000);
+dataGenerator(20000000);
 
 module.exports = dataGenerator;

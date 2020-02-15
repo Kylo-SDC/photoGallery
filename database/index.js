@@ -1,4 +1,4 @@
-const { Pool } = require('pg');
+const { Pool, Client } = require('pg');
 const path = require('path');
 require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 
@@ -16,10 +16,31 @@ require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 // );
 
 //####### POSTGRESQL DB CONNECTION
-const connection = `postgresql://${process.env.DB_USER}:@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`
+const user = process.env.DB_USER
+const host = process.env.DB_HOST
+const port = process.env.DB_PORT
+const collection = process.env.DB_DATABASE
 
-const db = new Pool({
-  connectionString: connection,
+const connection = `postgresql://${user}:${host}/${port}/${collection}`
+
+const pool = new Pool({
+  user: user,
+  host: host,
+  database: collection,
+  port: port,
 })
 
-module.exports = { db };
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  pool.end();
+})
+
+const client = new Client(pool)
+
+client.connect();
+client.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  client.end();
+})
+
+// module.exports = { db };
