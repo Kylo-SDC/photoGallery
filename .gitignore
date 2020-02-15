@@ -26,3 +26,6 @@ dist/
 
 # Environmental Variables
 .env
+
+#Fake Generated Data
+photos.csv

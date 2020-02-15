@@ -9,7 +9,8 @@
     "start:dev": "nodemon ./server/index.js",
     "build": "webpack --config webpack.config.js --watch",
     "connect": "mysql -u root",
-    "seed": "node ./database/seed.js",
+    "build:data": "node ./database/seed.js",
+    "db": "psql -d photos -U zach",
     "db:build": "mysql -u root < ./database/schema.sql"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
+    "pg": "^7.18.1",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

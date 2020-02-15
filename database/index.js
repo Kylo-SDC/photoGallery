@@ -1,13 +1,46 @@
-const mysql = require('mysql');
+const { Pool, Client } = require('pg');
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'DibsOnDinnerPhotos',
-});
+//####### MYSQL DB CONNECTION
+// const mysql = require('mysql');
 
-db.connect(
-  console.log('connected'),
-);
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'DibsOnDinnerPhotos',
+// });
 
-module.exports = db;
+// db.connect(
+//   console.log('connected'),
+// );
+
+//####### POSTGRESQL DB CONNECTION
+const user = process.env.DB_USER
+const host = process.env.DB_HOST
+const port = process.env.DB_PORT
+const collection = process.env.DB_DATABASE
+
+const connection = `postgresql://${user}:${host}/${port}/${collection}`
+
+const pool = new Pool({
+  user: user,
+  host: host,
+  database: collection,
+  port: port,
+})
+
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  pool.end();
+})
+
+const client = new Client(pool)
+
+client.connect();
+client.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+  client.end();
+})
+
+// module.exports = { db };
