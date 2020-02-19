@@ -28,22 +28,28 @@ const dataGenerator = (numOfPhotos) => {
   const generateImageUrl = () => {
     return `baconmockup.com/${Math.round(Math.random() * 1000)}/${Math.round(Math.random() * 1000)}`
   };
-  const fileWriter = fs.createWriteStream('photos.csv');
+  const fileWriter = fs.createWriteStream('/Users/zach/Desktop/HR_Github/photoGallery/photoGallery/photos.csv');
   let writing = true;
-
-  fileWriter.write('image, date, restaurantId \n')
+  let restaurantId = 0;
+  let id = 0;
+  fileWriter.write('id,image,date,restaurantId\n')
   const csvGenerator = () => {
     do {
       let photo = {};
+      if (numOfPhotos % 12 === 0|| Math.floor(Math.random() * 10) % 6 === 0) {
+        restaurantId += 1;
+      }
       const date = `${month[Math.floor(Math.random() * 12)]} ${Math.ceil(Math.random() * 30)} ${year[Math.floor(Math.random() * 4)]}`;
+      photo.id = id;
       photo.image = generateImageUrl();
       photo.date = date;
-      photo.restaurant_id = Math.round(Math.random() * 10000000);
+      photo.restaurantId = restaurantId;
+      id += 1;
       numOfPhotos -= 1;
       if (numOfPhotos < 0) {
         fileWriter.end();
       } else {
-        writing = fileWriter.write(`${photo.image}, ${photo.date}, ${photo.restaurant_id}\n`)
+        writing = fileWriter.write(`${photo.id},${photo.image},${photo.date},${photo.restaurantId}\n`)
       }
     } while (numOfPhotos > 0 && writing);
 
@@ -57,6 +63,6 @@ const dataGenerator = (numOfPhotos) => {
   csvGenerator()
 }
 
-dataGenerator(20000000);
+dataGenerator(100000000);
 
 module.exports = dataGenerator;
