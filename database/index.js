@@ -1,4 +1,4 @@
-const { Pool, Client } = require('pg');
+// const { Pool, Client } = require('pg');
 const cassandra = require('cassandra-driver');
 const path = require('path');
 require('dotenv').config({path: path.resolve(__dirname, '../.env')})
@@ -45,14 +45,15 @@ require('dotenv').config({path: path.resolve(__dirname, '../.env')})
 // })
 
 //####### CASSANDRA CONNECTION
-const client = new cassandra.Client({
+const db = new cassandra.Client({
   contactPoints: [process.env.DB_HOST],
   localDataCenter: 'datacenter1',
   keyspace: 'photos',
 })
 
-client.connect()
+db.connect()
 .then(() => {
   console.log('CONNECTED TO CASSANDRA')
 });
-// module.exports = { db };
+
+module.exports = { db };

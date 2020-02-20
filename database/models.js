@@ -1,10 +1,10 @@
-const db = require('./index.js');
+const client = require('./index.js');
 
 module.exports = {
-  gather: (restId, callback) => {
-    const queryStr = `SELECT * FROM photos WHERE restaurant_id = ${restId}`;
+  getOnePhoto: (restaurantId, id, callback) => {
+    const queryStr = `SELECT * FROM photos.image WHERE restaurantid = ${restaurantId} AND id = ${id}`;
 
-    db.query(queryStr, (err, results) => {
+    client.db.execute(queryStr, (err, results) => {
       if (err) {
         callback(err);
       } else {
@@ -14,9 +14,9 @@ module.exports = {
   },
 
   createNewPhoto: (newRecord, callback) => {
-    const queryStr = `INSERT INTO photos (image, restaurant_id, date) VALUES ('${newRecord.image}', ${newRecord.restaurant_id}, '${newRecord.date}')`;
+    const queryStr = `INSERT INTO photos.image (restaurantid, id, date, image) VALUES (${newRecord.restaurantId}, ${newRecord.id}, '${newRecord.date}', '${newRecord.image}')`;
 
-    db.query(queryStr, (err, result) => {
+    client.db.execute(queryStr, (err, result) => {
       if (err) {
         callback(err);
       } else {
@@ -25,10 +25,10 @@ module.exports = {
     })
   },
 
-  getOnePhoto: (id, callback) => {
-    const queryStr = `SELECT * FROM photos WHERE id = ${id}`;
+  getOneRestaurant: (id, callback) => {
+    const queryStr = `SELECT * FROM photos.image WHERE restaurantid = ${id}`;
 
-    db.query(queryStr, (err, result) => {
+    client.db.execute(queryStr, (err, result) => {
       if (err) {
         callback(err);
       } else {
@@ -37,10 +37,10 @@ module.exports = {
     })
   },
 
-  updateOnePhoto: (id, imageURL, callback) => {
-    const queryStr = `UPDATE photos SET image = '${imageURL}' WHERE id = ${id}`;
+  updateOnePhoto: (restaurantId, id, imageURL, callback) => {
+    const queryStr = `UPDATE photos.image SET image = '${imageURL}' WHERE restaurantid = ${restaurantId} AND id = ${id}`;
 
-    db.query(queryStr, (err, result) => {
+    client.db.execute(queryStr, (err, result) => {
       if (err) {
         callback(err);
       } else {
@@ -49,10 +49,10 @@ module.exports = {
     })
   },
 
-  deleteOnePhoto: (id, callback)  => {
-    const queryStr = `DELETE FROM photos WHERE id = ${id}`
+  deleteOnePhoto: (restaurantId, id, callback)  => {
+    const queryStr = `DELETE FROM photos.image WHERE restaurantid = ${restaurantId} AND id = ${id}`
 
-    db.query(queryStr, (err, result) => {
+    client.db.execute(queryStr, (err, result) => {
       if (err) {
         callback(err);
       } else {
