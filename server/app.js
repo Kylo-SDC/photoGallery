@@ -10,18 +10,20 @@ app.use(cors());
 app.use(express.static('./public'));
 app.use(express.json());
 
-app.get('/api/photos/:restaurant_id', (req, res) => {
-  db.gather(req.params.restaurant_id, (err, results) => {
-    if (err) {
-      console.log('error in app.get', err);
-    } else {
-      res.send(results);
-    }
-  });
-});
-
-app.get('/api/one_photo/:id', (req, res) => {
+app.get('/api/one_restaurant/:id', (req, res) => {
   const id = req.params.id;
+  db.getOneRestaurant(id, (err, photo) => {
+    if (err) {
+      console.error('error in getting one restaurant: ', err);
+    } else {
+      res.send(photo);
+    }
+  })
+})
+
+app.get('/api/one_photo', (req, res) => {
+  const restaurantId = req.body.restaurantId
+  const id = req.body.id;
   db.getOnePhoto(id, (err, photo) => {
     if (err) {
       console.error('error in getting one photo: ', err);
@@ -43,9 +45,10 @@ app.post('/api/add_photo', (req, res) => {
 })
 
 app.put('/api/update_photo', (req, res) => {
+  const restaurantId = req.body.restaurantId
   const id = req.body.id;
   const newImageURL = req.body.image;
-  db.updateOnePhoto(id, newImageURL, (err, update) => {
+  db.updateOnePhoto(restaurantId, id, newImageURL, (err, update) => {
     if (err) {
       console.error('unable to update photo: ', err);
     } else {
@@ -55,8 +58,9 @@ app.put('/api/update_photo', (req, res) => {
 })
 
 app.delete('/api/delete_record', (req, res) => {
+  const restaurantId = req.body.restaurantId
   const id = req.body.id;
-  db.deleteOnePhoto(id, (err, result) => {
+  db.deleteOnePhoto(restaurantId, id, (err, result) => {
     if (err) {
       console.error('unable to delete photo: ', err);
     } else {

@@ -10,8 +10,9 @@
     "build": "webpack --config webpack.config.js --watch",
     "connect": "mysql -u root",
     "build:data": "node ./database/seed.js",
-    "db": "psql -d photos -U zach",
-    "db:build": "mysql -u root < ./database/schema.sql"
+    "db:pg": "psql -d photos -U zach",
+    "db:cql": "cqlsh",
+    "db:pg:build": "psql -U zach < ./database/schema.sql"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "babel-loader": "^8.0.6",
+    "cassandra-driver": "^4.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",

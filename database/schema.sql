@@ -23,4 +23,4 @@ CREATE TABLE image (
 );
 
 COPY image(image, date, restaurantId)
-FROM '/Users/zach/Desktop/HR_Github/photoGallery/photoGallery/photoGallery/photos.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users/zach/Desktop/HR_Github/photoGallery/photoGallery/photos.csv' DELIMITER ',' CSV HEADER;
