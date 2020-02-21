@@ -10,19 +10,42 @@ app.use(cors());
 app.use(express.static('./public'));
 app.use(express.json());
 
-app.get('/api/one_restaurant/:id', (req, res) => {
-  const id = req.params.id;
-  db.getOneRestaurant(id, (err, photo) => {
+app.get('/api/photos/:id', (req, res) => {
+  db.getOneRestaurant(req.params.id, (err, results) => {
     if (err) {
-      console.error('error in getting one restaurant: ', err);
+      console.log('error in app.get', err);
     } else {
-      res.send(photo);
+      let data = [];
+      for (let i = 0; i < results.rows.length; i += 1) {
+        let currentItem = results.rows[i];
+        let photo = {};
+        photo.restaurantid = currentItem.restaurantid;
+        photo.id = currentItem.id;
+        photo.date = currentItem.date;
+        let currentImage = currentItem.image;
+        if (currentImage.includes('bacon')) {
+          currentImage = 'http://' + currentImage;
+        }
+        photo.image = currentImage;
+        data.push(photo);
+      }
+      res.send(data);
     }
-  })
-})
+  });
+});
+
+// app.get('/api/one_restaurant/:id', (req, res) => {
+//   const id = req.params.id;
+//   db.getOneRestaurant(id, (err, photo) => {
+//     if (err) {
+//       console.error('error in getting one restaurant: ', err);
+//     } else {
+//       res.send(photo);
+//     }
+//   })
+// })
 
 app.get('/api/one_photo', (req, res) => {
-  const restaurantId = req.body.restaurantId
   const id = req.body.id;
   db.getOnePhoto(id, (err, photo) => {
     if (err) {

@@ -26,19 +26,29 @@ const dataGenerator = (numOfPhotos) => {
   const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const year = ['2017', '2018', '2019', '2020'];
   const generateImageUrl = () => {
-    return `baconmockup.com/${Math.round(Math.random() * 1000)}/${Math.round(Math.random() * 1000)}`
+    if (numOfPhotos % 3 === 0) {
+      return `baconmockup.com/${Math.round(Math.random() * 1000)}/${Math.round(Math.random() * 1000)}`
+    } else {
+      const randomNumber = Math.ceil(Math.random() * 50);
+      const url = `https://dibsondinner.s3-us-east-2.amazonaws.com/dibsondinnerresize/photo-${randomNumber}.jpg`;
+      return url;
+    }
   };
+
   const fileWriter = fs.createWriteStream('/Users/zach/Desktop/HR_Github/photoGallery/photoGallery/photos.csv');
   let writing = true;
   let restaurantId = 0;
   let id = 0;
+  let randomNumOfPhotos = 0;
   fileWriter.write('id,image,date,restaurantId\n')
   const csvGenerator = () => {
     do {
       let photo = {};
-      if (numOfPhotos % 12 === 0|| Math.floor(Math.random() * 10) % 6 === 0) {
+      if (randomNumOfPhotos === 0) {
+        randomNumOfPhotos = Math.round(Math.random() * 10 + 10)
         restaurantId += 1;
       }
+      randomNumOfPhotos -= 1
       const date = `${month[Math.floor(Math.random() * 12)]} ${Math.ceil(Math.random() * 30)} ${year[Math.floor(Math.random() * 4)]}`;
       photo.id = id;
       photo.image = generateImageUrl();
@@ -46,14 +56,14 @@ const dataGenerator = (numOfPhotos) => {
       photo.restaurantId = restaurantId;
       id += 1;
       numOfPhotos -= 1;
-      if (numOfPhotos < 0) {
+      if (restaurantId >= 10000001) {
         fileWriter.end();
       } else {
         writing = fileWriter.write(`${photo.id},${photo.image},${photo.date},${photo.restaurantId}\n`)
       }
-    } while (numOfPhotos > 0 && writing);
+    } while (restaurantId <= 10000001 && writing);
 
-    if (numOfPhotos > 0) {
+    if (restaurantId <= 10000001) {
       fileWriter.once('drain', csvGenerator);
     }
     fileWriter.on('close', () => {
@@ -63,6 +73,6 @@ const dataGenerator = (numOfPhotos) => {
   csvGenerator()
 }
 
-dataGenerator(100000000);
+dataGenerator(200000000);
 
 module.exports = dataGenerator;
