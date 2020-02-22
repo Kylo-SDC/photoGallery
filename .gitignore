@@ -24,8 +24,9 @@ coverage
 build/
 dist/
 
-# Environmental Variables
+# Environmental Variables and Configs
 .env
+newrelic.js
 
 # Fake Generated Data
 photos.csv
