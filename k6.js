@@ -10,19 +10,26 @@ export let options = {
 
 
 export default function() {
-  // const postData = {
-  //   restaurantId: 10000001,
-  //   id: 150020816,
-  //   date: "February 21 2020",
-  //   image: "https://dibsondinner.s3-us-east-2.amazonaws.com/dibsondinnerresize/photo-50.jpg",
-  // }
+  let randomReqId = Math.floor((Math.random() * 1000000) + 9000000);
 
-  // const postHeaders = {
-  //   "Content-Type": "application/x-www-form-urlencoded",
-  // }
+  let firstRequest = {
+    method: 'GET',
+    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    tags: { name: 'Get based on restaurant ID'}
+  }
 
-  http.get("http://127.0.0.1:3009/?id=3");
-  http.get("http://127.0.0.1:3009/?id=10000000");
-  http.get("http://127.0.0.1:3009/?id=9000000");
-  http.get("http://127.0.0.1:3009/?id=9500000");
+  let secondRequest = {
+    method: 'GET',
+    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    tags: { name: 'Get based on restaurant ID'}
+  }
+
+  let thirdRequest = {
+    method: 'GET',
+    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    tags: { name: 'Get based on restaurant ID'}
+  }
+
+  let resp = http.batch([firstRequest, secondRequest, thirdRequest]);
+
 };
