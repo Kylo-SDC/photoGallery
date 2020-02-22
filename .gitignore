@@ -27,6 +27,7 @@ dist/
 # Environmental Variables and Configs
 .env
 newrelic.js
+newrelic_agent.log
 
 # Fake Generated Data
 photos.csv
