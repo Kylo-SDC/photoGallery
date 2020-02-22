@@ -15,7 +15,6 @@ module.exports = {
 
   createNewPhoto: (newRecord, callback) => {
     const queryStr = `INSERT INTO photos.image (restaurantid, id, date, image) VALUES (${newRecord.restaurantId}, ${newRecord.id}, '${newRecord.date}', '${newRecord.image}')`;
-
     client.db.execute(queryStr, (err, result) => {
       if (err) {
         callback(err);
