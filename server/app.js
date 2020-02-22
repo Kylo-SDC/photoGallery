@@ -4,11 +4,11 @@ const app = express();
 const cors = require('cors');
 const db = require('../database/models.js');
 
-
 app.use(cors());
 
 app.use(express.static('./public'));
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.get('/api/photos/:id', (req, res) => {
   db.getOneRestaurant(req.params.id, (err, results) => {

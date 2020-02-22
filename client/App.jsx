@@ -9,7 +9,7 @@ function App() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get('id');
-    axios.get(`/api/photos/${id}`)
+    axios.get(`http://localhost:3009/api/photos/${id}`)
       .then((response) => {
         setPhotos(response.data);
       })

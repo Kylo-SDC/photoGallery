@@ -24,8 +24,9 @@ coverage
 build/
 dist/
 
-# Environmental Variables
+# Environmental Variables and Configs
 .env
+
 
 # Fake Generated Data
 photos.csv
