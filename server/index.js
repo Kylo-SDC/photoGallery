@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('newrelic');
 const app = require('./app.js');
 

@@ -14,19 +14,19 @@ export default function() {
 
   let firstRequest = {
     method: 'GET',
-    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    url: `http://127.0.0.1:3009/api/photos/${randomReqId}`,
     tags: { name: 'Get based on restaurant ID'}
   }
 
   let secondRequest = {
     method: 'GET',
-    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    url: `http://127.0.0.1:3009/api/photos/${randomReqId}`,
     tags: { name: 'Get based on restaurant ID'}
   }
 
   let thirdRequest = {
     method: 'GET',
-    url: `http://127.0.0.1:3009/?id=${randomReqId}`,
+    url: `http://127.0.0.1:3009/api/photos/${randomReqId}`,
     tags: { name: 'Get based on restaurant ID'}
   }
 
