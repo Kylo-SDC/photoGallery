@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/hrr43-fec6-rey/photo-gallery-service#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "cassandra-driver": "^4.4.0",
     "cors": "^2.8.5",
